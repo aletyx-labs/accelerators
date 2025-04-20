@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.kie</groupId>
+		<artifactId>kie-tools-maven-base</artifactId>
+		<version>10.0.0-aletyx</version>
+	</parent>
+	<artifactId>start-with-aletyx</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>Intelligent Process Orchestration Service for Kubernetes</name>
+	<repositories>
+		<repository>
+			<id>aletyx-repository</id>
+			<url>https://maven.aletyx.services/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<!-- Add Plugin Repositories (optional) -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>aletyx-repository</id>
+			<url>https://maven.aletyx.services</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+	<properties>
+		<compiler-plugin.version>3.10.1</compiler-plugin.version>
+		<maven.compiler.release>17</maven.compiler.release>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+		<quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+		<quarkus.platform.version>3.8.4</quarkus.platform.version>
+		<kogito.bom.version>10.0.0-aletyx</kogito.bom.version>
+		<jbpm.quarkus.devui.version>10.0.0-aletyx</jbpm.quarkus.devui.version>
+		<version.io.quarkiverse.embedded.postgresql>0.2.2</version.io.quarkiverse.embedded.postgresql>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>${quarkus.platform.group-id}</groupId>
+				<artifactId>${quarkus.platform.artifact-id}</artifactId>
+				<version>${quarkus.platform.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.kie.kogito</groupId>
+				<artifactId>kogito-bom</artifactId>
+				<version>${kogito.bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jbpm</groupId>
+				<artifactId>jbpm-quarkus-devui-bom</artifactId>
+				<version>${kogito.bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- Core dependencies -->
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-arc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy-jackson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-openapi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-graphql</artifactId>
+		</dependency>
+
+		<!-- Kogito and jBPM dependencies -->
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kogito-addons-quarkus-data-index-postgresql</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>ai.aletyx.kie.kogito</groupId>
+			<artifactId>aletyx-kogito-addons-quarkus-jobs</artifactId>
+			<version>10.1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kogito-addons-quarkus-jobs-management</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-with-drools-quarkus</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-addons-quarkus-process-svg</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-addons-quarkus-process-management</artifactId>
+		</dependency>
+
+		<!-- DevUI -->
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-quarkus-devui</artifactId>
+		</dependency>
+
+		<!-- Persistence -->
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-jdbc-postgresql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-agroal</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-addons-quarkus-persistence-jdbc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kogito-addons-quarkus-data-index-persistence-postgresql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kogito-addons-quarkus-data-audit-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kogito-addons-quarkus-data-audit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-addons-quarkus-source-files</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-health</artifactId>
+		</dependency>
+
+		<!-- Security -->
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-oidc</artifactId>
+		</dependency>
+
+		<!-- OpenShift -->
+		<!-- <dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-openshift</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-container-image-openshift</artifactId>
+		</dependency> -->
+
+		<!-- Kubernetes-->
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-kubernetes</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-container-image-jib</artifactId>
+		</dependency>
+
+
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-junit5</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkiverse.embedded.postgresql</groupId>
+			<artifactId>quarkus-embedded-postgresql</artifactId>
+			<version>${version.io.quarkiverse.embedded.postgresql}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>${quarkus.platform.group-id}</groupId>
+				<artifactId>quarkus-maven-plugin</artifactId>
+				<version>${quarkus.platform.version}</version>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<goals>
+							<goal>build</goal>
+							<goal>generate-code</goal>
+							<goal>generate-code-tests</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${compiler-plugin.version}</version>
+				<configuration>
+					<compilerArgs>
+						<arg>-parameters</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>openshift</id>
+			<properties>
+				<quarkus.kubernetes-client.trust-certs>true</quarkus.kubernetes-client.trust-certs>
+				<quarkus.openshift.expose>true</quarkus.openshift.expose>
+				<quarkus.openshift.deployment-kind>Deployment</quarkus.openshift.deployment-kind>
+				<quarkus.container-image.group>${project.groupId}</quarkus.container-image.group>
+				<!-- Change to your Image Container Registry -->
+				<quarkus.container-image.registry>your-container-registry.com</quarkus.container-image.registry>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>kubernetes</id>
+			<properties>
+				<quarkus.kubernetes.deploy>true</quarkus.kubernetes.deploy>
+				<quarkus.kubernetes.deployment-target>kubernetes</quarkus.kubernetes.deployment-target>
+				<quarkus.kubernetes.ingress.expose>true</quarkus.kubernetes.ingress.expose>
+				<!-- Change to your Image Container Registry -->
+				<quarkus.container-image.registry>your-container-registry.com</quarkus.container-image.registry>
+				<!-- Change to your Image Group -->
+				<quarkus.container-image.group>aletyx-labs</quarkus.container-image.group>
+				<!-- Builds an Image based on Artifact ID for the Image Container Registry -->
+				<quarkus.container-image.name>${artifactId}</quarkus.container-image.name>
+				<quarkus.container-image.build>true</quarkus.container-image.build>
+				<quarkus.container-image.username>admin</quarkus.container-image.username>
+				<quarkus.container-image.insecure>true</quarkus.container-image.insecure>
+			</properties>
+		</profile>
+	</profiles>
+</project>
