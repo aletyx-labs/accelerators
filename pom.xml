@@ -44,7 +44,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
 		<quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-		<quarkus.platform.version>3.8.4</quarkus.platform.version>
+		<quarkus.platform.version>3.15.1</quarkus.platform.version>
 		<kogito.bom.version>10.0.0-aletyx</kogito.bom.version>
 		<jbpm.quarkus.devui.version>10.0.0-aletyx</jbpm.quarkus.devui.version>
 		<version.io.quarkiverse.embedded.postgresql>0.2.2</version.io.quarkiverse.embedded.postgresql>
@@ -104,11 +104,9 @@
 			<groupId>org.kie</groupId>
 			<artifactId>kogito-addons-quarkus-data-index-postgresql</artifactId>
 		</dependency>
-
 		<dependency>
-			<groupId>ai.aletyx.kie.kogito</groupId>
-			<artifactId>aletyx-kogito-addons-quarkus-jobs</artifactId>
-			<version>10.1.0-SNAPSHOT</version>
+			<groupId>org.kie</groupId>
+			<artifactId>kogito-addons-quarkus-jobs</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.kie</groupId>
@@ -151,6 +149,10 @@
 			<groupId>org.kie</groupId>
 			<artifactId>kogito-addons-quarkus-data-index-persistence-postgresql</artifactId>
 		</dependency>
+		<!-- <dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kogito-addons-quarkus-data-index-jpa</artifactId>
+		</dependency> -->
 		<dependency>
 			<groupId>org.kie</groupId>
 			<artifactId>kogito-addons-quarkus-data-audit-jpa</artifactId>
@@ -208,7 +210,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
