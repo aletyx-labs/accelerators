@@ -11,32 +11,6 @@
 	<artifactId>start-with-aletyx</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>Intelligent Process Orchestration Service for Kubernetes</name>
-	<repositories>
-		<repository>
-			<id>aletyx-repository</id>
-			<url>https://maven.aletyx.services/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
-	<!-- Add Plugin Repositories (optional) -->
-	<pluginRepositories>
-		<pluginRepository>
-			<id>aletyx-repository</id>
-			<url>https://maven.aletyx.services</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 	<properties>
 		<compiler-plugin.version>3.10.1</compiler-plugin.version>
 		<maven.compiler.release>17</maven.compiler.release>
