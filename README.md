@@ -34,9 +34,11 @@ Update the `kubernetes` profile in the pom.xml starting on Line 254. You will ne
 </profile>
 ```
 
+## Deployment Options with this Accelerator
+
 ### Using GitHub Actions
 
-This repository includes a pre-configured GitHub Actions workflow to deploy to Kubernetes. To use this workflow, you'll need to set up the following secrets in your GitHub repository:
+This repository includes a pre-configured GitHub Actions workflow to deploy to Kubernetes. The pipeline is found under `src/main/pipeline/.github`. This was done to remove the requirement of having to have the token have `workflow` permissions to create a project and if desired can use a provided *template* for GitHub Actions to be used to deploy. To use this workflow, you'll need to set up the following secrets in your GitHub repository:
 
 1. Go to your repository settings
 2. Navigate to Secrets and Variables > Actions
@@ -48,6 +50,127 @@ This repository includes a pre-configured GitHub Actions workflow to deploy to K
 | `NEXUS_PASSWORD`          | Password for the Nexus container registry    |
 | `KUBECONFIG`              | Base64-encoded Kubernetes configuration file |
 | `KEYCLOAK_ADMIN_PASSWORD` | Admin password for Keycloak                  |
+
+
+### Using the deploy-aletyx-kie.sh Script
+
+The `deploy-aletyx-kie.sh` script automates the deployment of {{product.name }} environments in Kubernetes clusters. This comprehensive deployment script sets up all necessary components including:
+
+- The main KIE application service
+- PostgreSQL database for persistence
+- Management Console for workflow oversight
+- Keycloak integration for authentication and authorization
+- Secure ingress with TLS certificates
+
+### Prerequisites
+
+Before running the deployment script, ensure you have:
+
+- Kubernetes cluster access with kubectl configured
+- Container registry credentials (if using private registry)
+- Domain name available for ingress endpoints
+- Keycloak instance (unless using --skip-keycloak option)
+
+### Configuration
+
+The script can be configured in two ways:
+
+1. **Command-line arguments** - Pass options directly
+2. **Configuration file** - Create a `deploy.config` file
+
+#### Sample Configuration File
+
+Create a `deploy.config` file with your environment values:
+
+```bash
+NAMESPACE=kie-demo
+SERVICE_NAME=hiring-approval
+DOMAIN_NAME=example.com
+KEYCLOAK_BASE_URL=keycloak.example.com
+REGISTRY_URL=docker.example.com
+NEXUS_USERNAME=your-username
+NEXUS_PASSWORD=your-password
+ADMIN_USERNAME=keycloak-admin
+ADMIN_PASSWORD=keycloak-password
+IMAGE_PULL_POLICY=IfNotPresent
+```
+
+### Basic Usage
+
+To deploy with default settings, simply run:
+
+```bash
+./deploy-aletyx-kie.sh
+```
+
+For a customized deployment:
+
+```bash
+./deploy-aletyx-kie.sh --namespace my-project \
+  --service-name loan-approval \
+  --domain mydomain.com \
+  --keycloak-url keycloak.mydomain.com \
+  --registry-url registry.mydomain.com \
+  --username registry-user \
+  --password registry-pass \
+  --build
+```
+
+### Key Options
+
+| Option               | Description                         |
+| -------------------- | ----------------------------------- |
+| `-n, --namespace`    | Kubernetes namespace for deployment |
+| `-s, --service-name` | Application service name            |
+| `-d, --domain`       | Domain name for ingress URLs        |
+| `-k, --keycloak-url` | Keycloak base URL                   |
+| `-r, --registry-url` | Container registry URL              |
+| `-b, --build`        | Build application before deployment |
+| `--skip-keycloak`    | Skip Keycloak configuration         |
+| `--skip-postgres`    | Skip PostgreSQL setup               |
+| `--debug`            | Enable verbose output               |
+
+### Deployment Process
+
+The script performs the following actions:
+
+1. Creates or validates the Kubernetes namespace
+2. Sets up container registry credentials
+3. Deploys PostgreSQL database (if not skipped)
+4. Deploys the main KIE application
+5. Configures secure ingress with TLS
+6. Deploys the management console
+7. Configures Keycloak (if not skipped)
+8. Creates a deployment summary
+
+### Accessing Deployed Services
+
+After deployment completes, you can access:
+
+- **Swagger UI**: `https://{service-name}.{domain}/q/swagger-ui`
+- **Management Console**: `https://{service-name}-management-console.{domain}`
+
+Default credentials:
+- Username: `jdoe`
+- Password: `jdoe`
+
+### Additional Features
+
+- **Deployment History**: Keeps track of past deployments in the `deployments/` directory
+- **Cleanup**: Automatically removes old deployments (keeping last 10)
+- **Symlinks**: Creates `deployments/latest` symlink to most recent deployment
+- **Logging**: Comprehensive logs in `{deploy-dir}/deployment.log`
+
+### Troubleshooting
+
+If deployment fails:
+1. Check the deployment logs in `deployments/{service-name}_{timestamp}/deployment.log`
+2. Run with `--debug` flag to enable verbose output
+3. Verify Kubernetes connection and permissions
+4. Ensure registry credentials are correct
+
+ Using the deploy-aletyx-kie.sh script
+
 
 #### Running the Workflow
 
